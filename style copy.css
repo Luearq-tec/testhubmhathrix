@@ -1,0 +1,141 @@
+/* Estilo geral */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+/* Estilo do vídeo de fundo */
+#background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+/* =============================================
+   AJUSTES DE RESPONSIVIDADE (MOBILE)
+   ============================================= */
+
+/* Ajuste para o vídeo de fundo (caso use a tag <video id="background-video">) */
+#background-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    #app {
+        width: 95%; /* Dá uma pequena margem nas laterais */
+        padding: 10px;
+    }
+
+    .login-container {
+        width: 100%;
+        padding: 20px 15px; /* Reduz o padding interno para ganhar espaço */
+        border-width: 5px; /* Reduz a borda grossa em telas menores */
+    }
+
+    .brand {
+        font-size: 1.5rem; /* Diminui o título para não quebrar linha */
+    }
+
+    /* Ajuste na Grid de 3 Colunas (Confiança | Cashout | Horário) */
+    .stats-grid-v77 {
+        gap: 5px;
+        margin: 20px 0;
+    }
+
+    .stat-box-v77 {
+        padding: 10px 2px;
+    }
+
+    .stat-box-v77.featured {
+        transform: scale(1.05); /* Reduz o destaque para não sobrepor os vizinhos */
+    }
+
+    .stat-box-v77 p {
+        font-size: 0.9rem; /* Diminui a fonte dos números/valores */
+    }
+
+    .stat-box-v77 span {
+        font-size: 0.5rem; /* Diminui as legendas */
+    }
+}
+
+/* Ajustes para celulares muito pequenos (iPhone SE, etc) */
+@media (max-width: 480px) {
+    .login-container {
+        border-width: 3px;
+    }
+
+    .btn-login {
+        padding: 12px;
+        font-size: 0.8rem;
+    }
+
+    .stat-box-v77 i {
+        font-size: 0.9rem;
+    }
+}
+
+
+
+/* Container que flutua */
+.circulo-flutuante {
+    position: fixed;       /* Fixa o elemento na tela, não rola com a página */
+    bottom: 460px;          /* Distância do fundo da tela */
+    right: 600px;           /* Distância da direita da tela */
+    width: 150px;           /* Tamanho do círculo */
+    height: 150px;          /* Altura deve ser igual à largura */
+    border-radius: 50%;    /* Cria o círculo */
+    overflow: hidden;      /* Corta a imagem para caber no círculo */
+    align-items: center;    
+    
+    /* Garante que fique por cima de TUDO */
+    z-index: 9999;         
+    
+    /* Estilo visual (Borda e Sombra para destacar do fundo) */
+    border: 3px solid #00ff41; /* Verde Neon do seu tema */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 255, 65, 0.3);
+    
+    /* Opcional: Animação suave para aparecer */
+    transition: transform 0.0s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+/* Efeito de hover (passar o mouse) */
+
+
+/* Estilo da imagem dentro do círculo */
+.circulo-flutuante img {
+    width: 100%;           /* Ocupa toda a largura do container */
+    height: 100%;          /* Ocupa toda a altura do container */
+    object-fit: cover;     /* Mantém a proporção sem distorcer a imagem */
+    display: block;        /* Remove espaços indesejados */
+}
+
+
+/* Impede a seleção em todo o corpo do site */
+body {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none;     /* IE 10 e IE 11 */
+  user-select: none;         /* Padrão (Chrome, Firefox, Edge) */
+}
+
+/* Opcional: permitir seleção apenas em campos de entrada (inputs) */
+input, textarea {
+  user-select: text;
+  -webkit-user-select: text;
+}

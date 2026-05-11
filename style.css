@@ -1,0 +1,349 @@
+:root {
+    --primary-color: #00ff41;
+    --primary-glow: rgba(0, 255, 65, 0.4);
+    --bg-dark: #050505;
+    --card-bg: rgba(15, 15, 15, 0.95);
+    --danger: #ff4141;
+    --admin-gold: #ffd700;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', 'Courier New', monospace;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: #ffffff;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Efeito de Fundo Sutil de Varredura */
+body::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+    z-index: 20;
+}
+
+/* Container Principal SPA */
+#app {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    z-index: 30;
+}
+
+/* Cards de Interface */
+.login-container {
+    background: var(--card-bg);
+    padding: 35px 25px;
+    border-radius: 20px;
+    border: 10px solid #07ff45;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 255, 65, 0.05);
+    text-align: center;
+    backdrop-filter: blur(15px);
+}
+
+/* Tipografia */
+.brand {
+    font-size: 2.2rem;
+    letter-spacing: 6px;
+    margin-bottom: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.brand span {
+    color: var(--primary-color);
+    text-shadow: 0 0 15px var(--primary-color);
+}
+
+.subtitle {
+    color: #ffffff;
+    font-size: 0.85rem;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+/* Inputs e Grupos */
+.input-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px 14px 14px 45px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: #fff;
+    outline: none;
+    transition: 0.3s;
+}
+
+.input-group input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px var(--primary-glow);
+}
+
+/* Botões */
+.btn-login {
+    width: 100%;
+    padding: 16px;
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.4s;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.btn-login:hover {
+    background: var(--primary-color);
+    color: #000;
+    box-shadow: 0 0 25px var(--primary-color);
+}
+
+/* Grid de Casas de Apostas */
+.grid-casas {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.card-casa {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-casa:hover {
+    border-color: var(--primary-color);
+    background: rgba(0, 255, 65, 0.08);
+    transform: translateX(5px);
+}
+
+/* Estilos da Dashboard de Sinais */
+.display-principal {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 40px 20px;
+    border-radius: 15px;
+    margin: 25px 0;
+    border: 1px solid rgba(0, 255, 65, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.live-tag {
+    background: var(--danger);
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 5px;
+    font-size: 0.65rem;
+    font-weight: bold;
+    animation: pulse-red 1.5s infinite;
+}
+
+.progress-container {
+    width: 100%;
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    margin: 15px 0;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--primary-color);
+    width: 0%;
+    animation: loading-bar 2s ease-in-out infinite;
+}
+
+/* Painel Admin */
+.admin-table {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    margin-top: 15px;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.user-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.badge {
+    font-size: 0.6rem;
+    padding: 4px 8px;
+    background: var(--primary-color);
+    color: #000;
+    font-weight: 800;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+/* Animações */
+@keyframes loading-bar {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+@keyframes pulse-red {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.blink {
+    animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+    50% { opacity: 0.2; }
+}
+
+/* Scrollbar para o Admin */
+::-webkit-scrollbar {
+    width: 5px;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+
+/* Estilo para as imagens dentro dos botões de seleção */
+.casa-logo {
+    max-width: 100%; /* A imagem não pode ser maior que o botão */
+    max-height: 40px; /* Define uma altura máxima para alinhar todos os logos */
+    height: auto; /* Mantém a proporção da imagem */
+    display: block;
+    margin: 0 auto; /* Centraliza a imagem horizontalmente */
+}
+
+/* Ajuste no card-casa para acomodar a imagem centralizada */
+.card-casa {
+    justify-content: center; /* Centraliza o conteúdo (a imagem) */
+    min-height: 70px; /* Garante uma altura mínima para o botão */
+}
+
+
+
+
+:root {
+    --primary: #00ff41;
+    --bg: #050505;
+    --card: rgba(20, 20, 20, 0.95);
+}
+
+body { background: var(--bg); color: #fff; font-family: monospace; height: 100vh; display: flex; justify-content: center; align-items: center; }
+
+.login-container {
+    background: var(--card); padding: 30px; border-radius: 20px;
+    border: 1px solid rgba(0, 255, 65, 0.2); width: 380px; text-align: center;
+}
+
+.brand { font-size: 1.8rem; letter-spacing: 3px; margin-bottom: 20px; }
+.brand span { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+
+/* Grid de 3 Colunas Dashboard */
+.stats-grid-v77 {
+    display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; margin: 30px 0;
+}
+
+.stat-box-v77 {
+    background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05);
+    padding: 15px 5px; border-radius: 12px; flex: 1; text-align: center;
+}
+
+.stat-box-v77.featured {
+    padding: 25px 5px; transform: scale(1.1); border-color: var(--primary);
+    background: rgba(0, 255, 65, 0.05); box-shadow: 0 0 20px rgba(0,255,65,0.1);
+}
+
+.stat-box-v77 i { font-size: 1.2rem; margin-bottom: 8px; display: block; }
+.stat-box-v77 span { font-size: 0.6rem; color: #ffffff; display: block; }
+.stat-box-v77 p { font-size: 1.2rem; font-weight: bold; margin-top: 5px; }
+
+.text-green { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+.text-blink { animation: blink 0.8s infinite; color: var(--primary); }
+
+@keyframes blink { 50% { opacity: 0; } }
+
+.btn-login {
+    width: 100%; padding: 15px; background: transparent; border: 1px solid var(--primary);
+    color: var(--primary); border-radius: 10px; cursor: pointer; transition: 0.3s;
+}
+
+.btn-login:hover { background: var(--primary); color: #000; box-shadow: 0 0 20px var(--primary); }
+.btn-fechar { border-color: #ffffff; color: #ffffff; }
+
+.casa-logo { max-height: 40px; filter: drop-shadow(0 0 5px rgba(255,255,255,0.2)); }
+.card-casa { padding: 15px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 10px; border-radius: 10px; cursor: pointer; }
+
+
+
+:root {
+    --primary: #00ff41;
+    --bg: #050505;
+    --card: rgba(15, 15, 15, 0.98);
+}
+
+body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+
+.login-container { background: var(--card); padding: 30px; border-radius: 20px; border: 5px solid rgb(0, 255, 64); width: 380px; text-align: center; }
+
+/* Grid de 3 Colunas */
+.stats-grid-v77 { display: flex; justify-content: space-between; align-items: flex-end; gap: 8px; margin: 25px 0; }
+
+.stat-box-v77 { background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.05); padding: 15px 5px; border-radius: 12px; flex: 1; text-align: center; }
+
+/* Card Central em Destaque */
+.stat-box-v77.featured { transform: scale(1.15); border: 1px solid var(--primary); background: rgba(0, 255, 65, 0.05); box-shadow: 0 0 20px rgba(0,255,65,0.2); z-index: 5; }
+
+.stat-box-v77 i { font-size: 1.1rem; margin-bottom: 5px; display: block; color: #fff; }
+.stat-box-v77 span { font-size: 0.55rem; color: #ffffff; letter-spacing: 1px; display: block; }
+.stat-box-v77 p { font-size: 1.1rem; font-weight: bold; margin-top: 5px; }
+
+.text-green { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+.text-blink { animation: blink 0.8s infinite; color: var(--primary); }
+@keyframes blink { 50% { opacity: 0; } }
+
+.casa-logo { max-height: 35px; }
