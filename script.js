@@ -1,5 +1,3 @@
-// script.js)// 
-
 const App = {
     elem: document.getElementById('app'),
     userLogado: null,
@@ -15,12 +13,18 @@ const App = {
     tentarLogin() {
         const u = document.getElementById('userLogin').value;
         const p = document.getElementById('passLogin').value;
+        const erroDisplay = document.getElementById('mensagemErro');
+
         const user = usuariosDB.find(x => x.user === u && x.pass === p);
+
         if (user) {
             this.userLogado = user;
+            if (erroDisplay) erroDisplay.innerText = "";
             this.voltarSelecao();
         } else {
-            alert("ACESSO NEGADO");
+            if (erroDisplay) {
+                erroDisplay.innerText = "VOCÊ NÃO É UM MATRIX ACESSO NEGADO!";
+            }
         }
     },
 
@@ -40,13 +44,12 @@ const App = {
         this.iniciarBuscaSinal();
     },
 
-    // script.js - Atualizado
     iniciarBuscaSinal() {
         this.limparTimers();
         const agora = new Date();
         let alvo = null;
 
-        // Procura nas próximas 24 horas a partir de agora
+        // Procura nas próximas 24 horas
         for (let i = 0; i < 24; i++) {
             let dataCheck = new Date(agora.getTime() + (i * 3600000));
             let horaKey = dataCheck.getHours().toString().padStart(2, '0') + ":00";
@@ -57,10 +60,10 @@ const App = {
                 let proximoM;
                 
                 if (i === 0) {
-                    // Se for a hora atual, pega o primeiro minuto que ainda não passou
+                    // Na hora atual, pega o primeiro minuto que ainda não passou
                     proximoM = minutosDisponiveis.find(m => m > agora.getMinutes());
                 } else {
-                    // Se for uma hora futura, pega o primeiro minuto da lista
+                    // Em horas futuras, pega o primeiro minuto disponível
                     proximoM = minutosDisponiveis[0];
                 }
 
@@ -69,7 +72,7 @@ const App = {
                     alvo.setMinutes(proximoM);
                     alvo.setSeconds(0);
                     alvo.setMilliseconds(0);
-                    break;
+                    break; // Encontrou o sinal mais próximo, sai do loop
                 }
             }
         }
@@ -79,8 +82,8 @@ const App = {
             this.rodarCronometro(alvo);
         } else {
             const dRelogio = document.getElementById('countdown');
-            if(dRelogio) dRelogio.innerHTML = "--:--";
-            console.warn("Nenhum sinal futuro encontrado na base de dados.");
+            if(dRelogio) dRelogio.innerHTML = "--:--:--";
+            console.warn("Nenhum sinal futuro encontrado.");
         }
     },
 
@@ -92,9 +95,9 @@ const App = {
             const agora = new Date().getTime();
             const dist = alvo.getTime() - agora;
 
-            // MOMENTO DO SINAL (00:00)
+            // MOMENTO DO SINAL (00:00:00)
             if (dist <= 0) {
-                if (dist < -60000) { // Após 1 minuto, busca o próximo sinal
+                if (dist < -60000) { // 1 minuto após o sinal, busca o próximo
                     this.iniciarBuscaSinal();
                     return;
                 }
@@ -111,20 +114,31 @@ const App = {
             }
 
             // DURANTE A CONTAGEM
-            dMult.innerHTML = "---"; 
-            dMult.classList.remove('text-green');
+            if (dMult) dMult.innerHTML = "---"; 
+            if (dMult) dMult.classList.remove('text-green');
             dRelogio.classList.remove('text-blink');
 
+            // CÁLCULO COM HORAS, MINUTOS E SEGUNDOS
+            const h = Math.floor(dist / (1000 * 60 * 60));
             const m = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((dist % (1000 * 60)) / 1000);
-            dRelogio.innerHTML = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+
+            // Se houver mais de 0 horas, mostra formato HH:MM:SS, senão MM:SS
+            if (h > 0) {
+                dRelogio.innerHTML = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            } else {
+                dRelogio.innerHTML = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            }
+            
         }, 1000);
     },
 
     animarMultiplicador(valorFinal) {
         clearInterval(this.intervalAnimacao);
         const display = document.getElementById('multiplier-value');
-        let valorAtual = valorFinal - 5.00;
+        if (!display) return;
+
+        let valorAtual = Math.max(1.00, valorFinal - 5.00);
         display.classList.add('text-green');
 
         this.intervalAnimacao = setInterval(() => {
