@@ -50,6 +50,22 @@ const App = {
         const agora = new Date();
         let alvo = null;
 
+        // TENTA RECUPERAR SINAL SALVO DA CASA ATUAL
+        const sinalSalvo = localStorage.getItem(`alvo_sinal_${this.casaAtual}`);
+        if (sinalSalvo) {
+            const dataSalva = new Date(sinalSalvo);
+            // Se o sinal guardado ainda for válido (está no futuro ou aconteceu há menos de 1 minuto)
+            if (dataSalva.getTime() - agora.getTime() > -60000) {
+                this.animacaoJaExecutada = false;
+                this.rodarCronometro(dataSalva);
+                return; // Mantém o sinal antigo intacto
+            } else {
+                // Remove os dados antigos se o sinal já expirou completamente
+                localStorage.removeItem(`alvo_sinal_${this.casaAtual}`);
+                localStorage.removeItem(`alvo_mult_${this.casaAtual}`);
+            }
+        }
+
         // Procura nas próximas 24 horas
         for (let i = 0; i < 24; i++) {
             let dataCheck = new Date(agora.getTime() + (i * 3600000));
@@ -82,6 +98,8 @@ const App = {
         }
 
         if (alvo) {
+            // SALVA O NOVO HORÁRIO DO SINAL ENCONTRADO
+            localStorage.setItem(`alvo_sinal_${this.casaAtual}`, alvo.toISOString());
             this.animacaoJaExecutada = false;
             this.rodarCronometro(alvo);
         } else {
@@ -101,6 +119,9 @@ const App = {
             // MOMENTO DO SINAL (00:00:00 ou tempo negativo até 1 min)
             if (dist <= 0) {
                 if (dist < -60000) { 
+                    // Limpa o sinal antigo do cache ao expirar totalmente
+                    localStorage.removeItem(`alvo_sinal_${this.casaAtual}`);
+                    localStorage.removeItem(`alvo_mult_${this.casaAtual}`);
                     this.iniciarBuscaSinal();
                     return;
                 }
@@ -111,7 +132,15 @@ const App = {
                 }
 
                 if (!this.animacaoJaExecutada) {
-                    const valorAlvo = (Math.random() * (15 - 7) + 7).toFixed(2);
+                    // VERIFICA SE JÁ EXISTE UM MULTIPLICADOR GERADO PARA ESTE SINAL ESPECÍFICO
+                    let valorAlvo = localStorage.getItem(`alvo_mult_${this.casaAtual}`);
+                    
+                    if (!valorAlvo) {
+                        // Se não existir, gera pela primeira vez e salva no local da respectiva casa
+                        valorAlvo = (Math.random() * (10 - 7) + 7).toFixed(2);
+                        localStorage.setItem(`alvo_mult_${this.casaAtual}`, valorAlvo);
+                    }
+
                     this.animarMultiplicador(parseFloat(valorAlvo));
                     this.animacaoJaExecutada = true;
                 }
@@ -165,9 +194,3 @@ const App = {
 };
 
 App.init();
-
-
-
-
-
-
