@@ -1,3 +1,4 @@
+// script.js essa logica não mexe.
 const App = {
     elem: document.getElementById('app'),
     userLogado: null,
@@ -57,22 +58,25 @@ const App = {
             let minutosDisponiveis = dadosSinais[this.casaAtual][horaKey] || [];
 
             if (minutosDisponiveis.length > 0) {
-                let proximoM;
-                
-                if (i === 0) {
-                    // Na hora atual, pega o primeiro minuto que ainda não passou
-                    proximoM = minutosDisponiveis.find(m => m > agora.getMinutes());
-                } else {
-                    // Em horas futuras, pega o primeiro minuto disponível
-                    proximoM = minutosDisponiveis[0];
-                }
+                // CORREÇÃO: Agora usa >= para pegar o sinal se você logar no minuto exato
+                let proximoM = minutosDisponiveis.find(m => {
+                    if (i === 0) return m >= agora.getMinutes(); 
+                    return true; // Para horas futuras, qualquer minuto da lista serve
+                });
 
                 if (proximoM !== undefined) {
-                    alvo = new Date(dataCheck.getTime());
-                    alvo.setMinutes(proximoM);
-                    alvo.setSeconds(0);
-                    alvo.setMilliseconds(0);
-                    break; // Encontrou o sinal mais próximo, sai do loop
+                    let dataAlvo = new Date(dataCheck.getTime());
+                    dataAlvo.setMinutes(proximoM);
+                    dataAlvo.setSeconds(0);
+                    dataAlvo.setMilliseconds(0);
+
+                    // Verifica se o sinal já não expirou (ex: se já passou mais de 59s do minuto)
+                    if (i === 0 && (agora.getTime() - dataAlvo.getTime()) > 59000) {
+                        continue; // Pula para o próximo sinal
+                    }
+
+                    alvo = dataAlvo;
+                    break;
                 }
             }
         }
@@ -83,7 +87,6 @@ const App = {
         } else {
             const dRelogio = document.getElementById('countdown');
             if(dRelogio) dRelogio.innerHTML = "--:--:--";
-            console.warn("Nenhum sinal futuro encontrado.");
         }
     },
 
@@ -95,18 +98,20 @@ const App = {
             const agora = new Date().getTime();
             const dist = alvo.getTime() - agora;
 
-            // MOMENTO DO SINAL (00:00:00)
+            // MOMENTO DO SINAL (00:00:00 ou tempo negativo até 1 min)
             if (dist <= 0) {
-                if (dist < -60000) { // 1 minuto após o sinal, busca o próximo
+                if (dist < -60000) { 
                     this.iniciarBuscaSinal();
                     return;
                 }
 
-                dRelogio.innerHTML = "AGORA";
-                dRelogio.classList.add('text-blink');
+                if (dRelogio) {
+                    dRelogio.innerHTML = "AGORA";
+                    dRelogio.classList.add('text-blink');
+                }
 
                 if (!this.animacaoJaExecutada) {
-                    const valorAlvo = (Math.random() * (20 - 10) + 10).toFixed(2);
+                    const valorAlvo = (Math.random() * (15 - 7) + 7).toFixed(2);
                     this.animarMultiplicador(parseFloat(valorAlvo));
                     this.animacaoJaExecutada = true;
                 }
@@ -114,16 +119,18 @@ const App = {
             }
 
             // DURANTE A CONTAGEM
-            if (dMult) dMult.innerHTML = "---"; 
-            if (dMult) dMult.classList.remove('text-green');
-            dRelogio.classList.remove('text-blink');
+            if (dMult) {
+                dMult.innerHTML = "---"; 
+                dMult.classList.remove('text-green');
+            }
+            if (dRelogio) dRelogio.classList.remove('text-blink');
 
-            // CÁLCULO COM HORAS, MINUTOS E SEGUNDOS
+            // CÁLCULO DE HORAS, MINUTOS E SEGUNDOS
             const h = Math.floor(dist / (1000 * 60 * 60));
             const m = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((dist % (1000 * 60)) / 1000);
 
-            // Se houver mais de 0 horas, mostra formato HH:MM:SS, senão MM:SS
+            // Se houver horas, mostra HH:MM:SS, senão apenas MM:SS
             if (h > 0) {
                 dRelogio.innerHTML = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
             } else {
@@ -158,3 +165,9 @@ const App = {
 };
 
 App.init();
+
+
+
+
+
+

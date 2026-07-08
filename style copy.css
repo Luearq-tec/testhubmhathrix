@@ -92,50 +92,144 @@ body, html {
 
 
 
-/* Container que flutua */
+/* Container que flutua - Centralizado no Topo */
 .circulo-flutuante {
-    position: fixed;       /* Fixa o elemento na tela, não rola com a página */
-    bottom: 460px;          /* Distância do fundo da tela */
-    right: 600px;           /* Distância da direita da tela */
-    width: 150px;           /* Tamanho do círculo */
-    height: 150px;          /* Altura deve ser igual à largura */
-    border-radius: 50%;    /* Cria o círculo */
-    overflow: hidden;      /* Corta a imagem para caber no círculo */
-    align-items: center;    
+    position: fixed;       /* Fixa o elemento na tela */
+    top: 100px;             /* Distância do topo da tela */
+    left: 50%;             /* Move para o meio horizontal */
+    transform: translateX(-50%); /* Ajusta o eixo para o centro exato */
+    
+    width: 150px;          /* Reduzi um pouco para não cobrir muito o login no mobile */
+    height: 150px;
+    border-radius: 50%;    
+    overflow: hidden;      
     
     /* Garante que fique por cima de TUDO */
     z-index: 9999;         
     
-    /* Estilo visual (Borda e Sombra para destacar do fundo) */
-    border: 3px solid #00ff41; /* Verde Neon do seu tema */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 255, 65, 0.3);
+    /* Estilo visual */
+    border: 6px solid #00ff41; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 255, 65, 0.4);
     
-    /* Opcional: Animação suave para aparecer */
-    transition: transform 0.0s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
 }
 
-/* Efeito de hover (passar o mouse) */
-
+/* Ajuste para telas menores (Mobile) */
+@media (max-width: 768px) {
+    .circulo-flutuante {
+        
+        width: 120px;      /* Menor no celular para não atrapalhar a visão */
+        height: 120px;
+        top: 25px;        /* Mais próximo do topo no mobile */
+    }
+}
 
 /* Estilo da imagem dentro do círculo */
 .circulo-flutuante img {
-    width: 100%;           /* Ocupa toda a largura do container */
-    height: 100%;          /* Ocupa toda a altura do container */
-    object-fit: cover;     /* Mantém a proporção sem distorcer a imagem */
-    display: block;        /* Remove espaços indesejados */
+    width: 100%;           
+    height: 100%;          
+    object-fit: cover;     
+    display: block;        
+}
+
+/* Efeito de hover suave */
+.circulo-flutuante:hover {
+    transform: translateX(-50%) scale(1.05); /* Mantém o centro e cresce levemente */
+    box-shadow: 0 0 25px rgba(0, 255, 65, 0.6);
 }
 
 
-/* Impede a seleção em todo o corpo do site */
-body {
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none;     /* IE 10 e IE 11 */
-  user-select: none;         /* Padrão (Chrome, Firefox, Edge) */
+
+
+/* Container que flutua - Centralizado no Topo */
+.circulo-live {
+    position: fixed;       /* Fixa o elemento na tela */
+    top: 200px;             /* Distância do topo da tela */
+    left: 50%;             /* Move para o meio horizontal */
+    transform: translateX(-50%); /* Ajusta o eixo para o centro exato */
+    
+    width: 150px;          /* Reduzi um pouco para não cobrir muito o login no mobile */
+    height: 150px;
+    border-radius: 50%;    
+    overflow: hidden;      
+    
+    /* Garante que fique por cima de TUDO */
+    z-index: 9999;         
+    
+
+    
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
 }
 
-/* Opcional: permitir seleção apenas em campos de entrada (inputs) */
-input, textarea {
-  user-select: text;
-  -webkit-user-select: text;
+/* Ajuste para telas menores (Mobile) */
+@media (max-width: 768px) {
+    .circulo-live {
+        
+        width: 50px;      /* Menor no celular para não atrapalhar a visão */
+        height: 50px;
+        top: 25px;        /* Mais próximo do topo no mobile */
+    }
+}
+
+
+/* Efeito de hover suave */
+.circulo-live:hover {
+    transform: translateX(-50%) scale(1.05); /* Mantém o centro e cresce levemente */
+    box-shadow: 0 0 25px rgba(0, 255, 65, 0.6);
+}
+
+
+/* Container pai ajustado para posicionar o selo LIVE */
+.circulo-flutuante {
+    /* ... suas configurações anteriores ... */
+    position: fixed;
+    display: flex;
+    flex-direction: column; /* Alinha os itens em coluna */
+    align-items: center;
+    overflow: visible; /* IMPORTANTE: mude de hidden para visible para o selo aparecer fora */
+}
+
+/* Ajuste na imagem para manter o círculo, já que o pai agora é 'visible' */
+.circulo-flutuante img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%; /* O arredondamento agora fica na imagem */
+    object-fit: cover;
+    border: 0px solid var(--primary-color);
+}
+
+/* O selo LIVE abaixo da bolinha */
+.live-status-tag {
+    position: absolute;
+    bottom: -10px;        /* Joga para baixo da borda da bolinha */
+    background: #ff0000;  /* Vermelho vibrante */
+    color: white;
+    font-family: var(--font-terminal);
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    box-shadow: 0 0 10px rgb(255, 0, 0);
+    animation: live-blink 1.2s infinite ease-in-out; /* Efeito piscante */
+    z-index: 10000;
+}
+
+/* Animação de pulsar e piscar */
+@keyframes live-blink {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(0.95);
+        box-shadow: 0 0 20px rgba(255, 0, 0, 1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }

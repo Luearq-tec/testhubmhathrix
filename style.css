@@ -77,6 +77,13 @@ body::after {
     letter-spacing: 1px;
 }
 
+.mensagemErro {
+    color: #ff0000;
+    font-size: 0.85rem;
+    margin-top: 5000px;
+    letter-spacing: 1px;
+}
+
 /* Inputs e Grupos */
 .input-group {
     position: relative;
@@ -168,13 +175,15 @@ body::after {
 }
 
 .live-tag {
-    background: var(--danger);
+    background: #ff0000;
     color: #fff;
-    padding: 3px 10px;
+    padding: 5px 20px;
     border-radius: 5px;
-    font-size: 0.65rem;
+    font-size: 1.25rem;
     font-weight: bold;
     animation: pulse-red 1.5s infinite;
+    border-radius: 10px;
+    margin: 10px;
 }
 
 .progress-container {
@@ -280,7 +289,7 @@ body { background: var(--bg); color: #fff; font-family: monospace; height: 100vh
     border: 1px solid rgba(0, 255, 65, 0.2); width: 380px; text-align: center;
 }
 
-.brand { font-size: 1.8rem; letter-spacing: 3px; margin-bottom: 20px; }
+.brand { font-size: 2rem; letter-spacing: 3px; margin-bottom: 20px; }
 .brand span { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
 
 /* Grid de 3 Colunas Dashboard */
