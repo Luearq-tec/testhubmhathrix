@@ -1,6 +1,11 @@
 // DB.js -
 
 const usuariosDB = [
-    { user: "admin", pass: "123", role: "admin" },
-    { user: "user", pass: "v77", role: "user" }
+    { id: "1", user: "admin", pass: "123", role: "admin", online: false, acesso: true, inicioConexao: null },
+    { id: "2", user: "user", pass: "v77", role: "user", online: false, acesso: true, inicioConexao: null }
 ];
+
+// Inicialização automática no navegador
+if (!localStorage.getItem('matrix_data')) {
+    localStorage.setItem('matrix_data', JSON.stringify(usuariosDB));
+}

@@ -16,6 +16,9 @@ function renderPlataformas() {
                 <div class="casa-item" onclick="app.irParaSinais('bantubet')">
                     <i class="fas fa-server"></i> bantubet
                 </div>bantubet
+                <div class="casa-item" onclick="app.irParaSinais('win')">
+                    <i class="fas fa-server"></i> win
+                </div>bantubet
             </div>
         </div>
     `;
