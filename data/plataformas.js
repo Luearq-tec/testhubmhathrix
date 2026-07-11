@@ -15,10 +15,13 @@ function renderPlataformas() {
                 </div>
                 <div class="casa-item" onclick="app.irParaSinais('bantubet')">
                     <i class="fas fa-server"></i> bantubet
-                </div>bantubet
+                </div>
+                <div class="casa-item" onclick="app.irParaSinais('kwanzaBET')">
+                    <i class="fas fa-server"></i> kwanzabet
+                </div>
                 <div class="casa-item" onclick="app.irParaSinais('win')">
                     <i class="fas fa-server"></i> win
-                </div>bantubet
+                </div>
             </div>
         </div>
     `;

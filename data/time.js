@@ -1,75 +1,115 @@
 (function() {
-    // 1. Limpa instâncias anteriores para não acumular
-    const antigo = document.getElementById('relogio-arrastavel');
-    if (antigo) antigo.remove();
-
-    // 2. Cria o CSS injetado (estilo padrão no canto inferior direito)
-    const estiloTag = document.createElement('style');
-    estiloTag.innerHTML = `
-        #relogio-arrastavel {
-            position: fixed !important;
-            bottom: 20px;
-            right: 20px;
-            background-color: rgba(20, 20, 20, 0.95) !important;
-            color: #00ffcc !important;
-            font-family: 'Courier New', monospace !important;
-            font-size: 26px !important;
-            font-weight: bold !important;
-            padding: 12px 20px !important;
-            border-radius: 8px !important;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5) !important;
-            z-index: 999999 !important;
-            cursor: move !important; /* Mostra a mãozinha de arrastar */
-            user-select: none !important; /* Impede de selecionar o texto ao arrastar */
-        }
-    `;
-    document.head.appendChild(estiloTag);
-
-    // 3. Cria o elemento
+    // --- 1. CRIAR O ELEMENTO HTML VIA JS ---
     const relogio = document.createElement('div');
-    relogio.id = 'relogio-arrastavel';
+    relogio.id = 'relogio-flutuante-js';
+    relogio.textContent = '00:00:00';
     document.body.appendChild(relogio);
 
-    // 4. Lógica para Atualizar as Horas
-    function atualizar() {
+    // --- 2. APLICAR OS ESTILOS CSS VIA JS ---
+    const estilos = {
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        padding: '15px 25px',
+        background: 'rgba(255, 255, 255, 0.1)',
+        backdropFilter: 'blur(10px)',
+        webkitBackdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
+        borderRadius: '15px',
+        boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.3)',
+        color: '#ffffff',
+        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+        fontSize: '2rem',
+        fontWeight: 'bold',
+        letterSpacing: '2px',
+        cursor: 'move',
+        userSelect: 'none',
+        zIndex: '99999',
+        transition: 'box-shadow 0.3s ease'
+    };
+
+    // Copia todos os estilos acima para o elemento
+    Object.assign(relogio.style, estilos);
+
+    // --- 3. FUNÇÃO DO TEMPO (Atualização) ---
+    function atualizarRelogio() {
         const agora = new Date();
         const horas = String(agora.getHours()).padStart(2, '0');
         const minutos = String(agora.getMinutes()).padStart(2, '0');
         const segundos = String(agora.getSeconds()).padStart(2, '0');
+        
         relogio.textContent = `${horas}:${minutos}:${segundos}`;
     }
-    atualizar();
-    setInterval(atualizar, 1000);
+    
+    setInterval(atualizarRelogio, 1000);
+    atualizarRelogio(); // Executa imediatamente
 
-    // 5. Lógica para Arrastar (Drag and Drop)
+    // --- 4. FUNÇÃO PARA ARRASTAR (Rato e Toque) ---
     let arrastando = false;
-    let offsetOffsetX = 0;
-    let offsetOffsetY = 0;
+    let xInicial, yInicial, xAtual, yAtual;
 
-    relogio.addEventListener('mousedown', function(e) {
+    // Eventos de clique do rato
+    relogio.addEventListener('mousedown', (e) => {
         arrastando = true;
-        
-        // Remove as posições fixas iniciais do CSS (bottom/right) para usar top/left dinâmicos
-        const retangulo = relogio.getBoundingClientRect();
-        relogio.style.bottom = 'auto';
-        relogio.style.right = 'auto';
-        relogio.style.left = retangulo.left + 'px';
-        relogio.style.top = retangulo.top + 'px';
-
-        // Calcula a distância exata de onde o mouse clicou dentro do relógio
-        offsetOffsetX = e.clientX - retangulo.left;
-        offsetOffsetY = e.clientY - retangulo.top;
+        xInicial = e.clientX - relogio.offsetLeft;
+        yInicial = e.clientY - relogio.offsetTop;
+        relogio.style.cursor = 'grabbing';
+        relogio.style.boxShadow = '0 12px 40px 0 rgba(0, 0, 0, 0.5)';
     });
 
-    document.addEventListener('mousemove', function(e) {
+    document.addEventListener('mousemove', (e) => {
         if (!arrastando) return;
+        e.preventDefault();
 
-        // Atualiza a posição do relógio baseada no movimento do mouse
-        relogio.style.left = (e.clientX - offsetOffsetX) + 'px';
-        relogio.style.top = (e.clientY - offsetOffsetY) + 'px';
+        xAtual = e.clientX - xInicial;
+        yAtual = e.clientY - yInicial;
+
+        // Limitar o relógio dentro da janela do navegador
+        const limiteX = window.innerWidth - relogio.offsetWidth;
+        const limiteY = window.innerHeight - relogio.offsetHeight;
+
+        xAtual = Math.max(0, Math.min(xAtual, limiteX));
+        yAtual = Math.max(0, Math.min(yAtual, limiteY));
+
+        relogio.style.left = xAtual + 'px';
+        relogio.style.top = yAtual + 'px';
+        relogio.style.right = 'auto'; // Remove a fixação inicial à direita
     });
 
-    document.addEventListener('mouseup', function() {
+    document.addEventListener('mouseup', () => {
+        if (arrastando) {
+            arrastando = false;
+            relogio.style.cursor = 'move';
+            relogio.style.boxShadow = '0 8px 32px 0 rgba(0, 0, 0, 0.3)';
+        }
+    });
+
+    // Eventos para ecrãs táteis (Mobile)
+    relogio.addEventListener('touchstart', (e) => {
+        arrastando = true;
+        const toque = e.touches[0];
+        xInicial = toque.clientX - relogio.offsetLeft;
+        yInicial = toque.clientY - relogio.offsetTop;
+    });
+
+    document.addEventListener('touchmove', (e) => {
+        if (!arrastando) return;
+        const toque = e.touches[0];
+        xAtual = toque.clientX - xInicial;
+        yAtual = toque.clientY - yInicial;
+
+        const limiteX = window.innerWidth - relogio.offsetWidth;
+        const limiteY = window.innerHeight - relogio.offsetHeight;
+
+        xAtual = Math.max(0, Math.min(xAtual, limiteX));
+        yAtual = Math.max(0, Math.min(yAtual, limiteY));
+
+        relogio.style.left = xAtual + 'px';
+        relogio.style.top = yAtual + 'px';
+        relogio.style.right = 'auto';
+    });
+
+    document.addEventListener('touchend', () => {
         arrastando = false;
     });
 })();
