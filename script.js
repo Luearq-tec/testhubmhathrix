@@ -137,7 +137,7 @@ const App = {
                     
                     if (!valorAlvo) {
                         // Se não existir, gera pela primeira vez e salva no local da respectiva casa
-                        valorAlvo = (Math.random() * (10 - 7) + 7).toFixed(2);
+                        valorAlvo = (Math.random() * (7 - 2) + 2).toFixed(2);
                         localStorage.setItem(`alvo_mult_${this.casaAtual}`, valorAlvo);
                     }
 
