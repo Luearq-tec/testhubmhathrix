@@ -136,8 +136,13 @@ const App = {
                     let valorAlvo = localStorage.getItem(`alvo_mult_${this.casaAtual}`);
                     
                     if (!valorAlvo) {
-                        // Se não existir, gera pela primeira vez e salva no local da respectiva casa
-                        valorAlvo = (Math.random() * (7 - 2) + 2).toFixed(2);
+                        // ATUALIZAÇÃO: Gerador idêntico para todos baseado no horário do sinal (alvo)
+                        const seed = alvo.getTime();
+                        const x = Math.sin(seed) * 10000;
+                        const pseudoRandom = x - Math.floor(x);
+
+                        // Aplica o valor entre 2 e 7
+                        valorAlvo = (pseudoRandom * (7 - 2) + 2).toFixed(2);
                         localStorage.setItem(`alvo_mult_${this.casaAtual}`, valorAlvo);
                     }
 
