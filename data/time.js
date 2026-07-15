@@ -19,7 +19,7 @@
         boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.3)',
         color: '#ffffff',
         fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-        fontSize: '2rem',
+        fontSize: '1.25rem',
         fontWeight: 'bold',
         letterSpacing: '2px',
         cursor: 'move',
