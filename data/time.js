@@ -8,8 +8,8 @@
     // --- 2. APLICAR OS ESTILOS CSS VIA JS ---
     const estilos = {
         position: 'fixed',
-        top: '20px',
-        right: '20px',
+        bottom: '50px',
+        left: 'center%',
         padding: '15px 25px',
         background: 'rgba(255, 255, 255, 0.1)',
         backdropFilter: 'blur(10px)',
@@ -25,8 +25,16 @@
         cursor: 'move',
         userSelect: 'none',
         zIndex: '99999',
-        transition: 'box-shadow 0.3s ease'
+        transition: 'box-shadow 0.3s ease',
+
+        
+ 
+
+
     };
+
+
+    
 
     // Copia todos os estilos acima para o elemento
     Object.assign(relogio.style, estilos);
