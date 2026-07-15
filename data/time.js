@@ -9,7 +9,15 @@
     const estilos = {
         position: 'fixed',
         bottom: '50px',
-        left: 'center%',
+        // Centraliza horizontalmente de forma correta no início:
+        left: '50%',
+        transform: 'translateX(-50%)',
+        
+        // Garante tamanho fixo para o conteúdo do relógio não espremer/esticar:
+        width: 'max-content',
+        whiteSpace: 'nowrap',
+        cursor: 'move',
+
         padding: '15px 25px',
         background: 'rgba(255, 255, 255, 0.1)',
         backdropFilter: 'blur(10px)',
@@ -21,20 +29,9 @@
         fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
         fontSize: '1.25rem',
         fontWeight: 'bold',
-        letterSpacing: '2px',
-        cursor: 'move',
-        userSelect: 'none',
         zIndex: '99999',
         transition: 'box-shadow 0.3s ease',
-
-        
- 
-
-
     };
-
-
-    
 
     // Copia todos os estilos acima para o elemento
     Object.assign(relogio.style, estilos);
@@ -59,6 +56,10 @@
     // Eventos de clique do rato
     relogio.addEventListener('mousedown', (e) => {
         arrastando = true;
+        
+        // IMPORTANTE: Remove o transform de centralização para não bugar o cálculo do arrasto
+        relogio.style.transform = 'none'; 
+        
         xInicial = e.clientX - relogio.offsetLeft;
         yInicial = e.clientY - relogio.offsetTop;
         relogio.style.cursor = 'grabbing';
@@ -82,6 +83,7 @@
         relogio.style.left = xAtual + 'px';
         relogio.style.top = yAtual + 'px';
         relogio.style.right = 'auto'; // Remove a fixação inicial à direita
+        relogio.style.bottom = 'auto'; // SOLUÇÃO: Remove o bottom inicial para não esticar!
     });
 
     document.addEventListener('mouseup', () => {
@@ -95,6 +97,7 @@
     // Eventos para ecrãs táteis (Mobile)
     relogio.addEventListener('touchstart', (e) => {
         arrastando = true;
+        relogio.style.transform = 'none'; // Remove transform no mobile também
         const toque = e.touches[0];
         xInicial = toque.clientX - relogio.offsetLeft;
         yInicial = toque.clientY - relogio.offsetTop;
@@ -115,6 +118,7 @@
         relogio.style.left = xAtual + 'px';
         relogio.style.top = yAtual + 'px';
         relogio.style.right = 'auto';
+        relogio.style.bottom = 'auto'; // SOLUÇÃO: Remove o bottom inicial para não esticar!
     });
 
     document.addEventListener('touchend', () => {
