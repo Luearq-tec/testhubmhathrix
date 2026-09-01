@@ -25,6 +25,7 @@ const dadosSinais = {
     },  
     888bet: {
         "06:00": [59,],
+    },
         
     elephantbet: {
         "00:00": [2,13,20,33,49],
