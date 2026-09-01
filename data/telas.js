@@ -41,7 +41,7 @@ const Telas = {
                 <div class="card-casa" onclick="App.verSinais('elephantbet')">
                     <img src="assets/ima02.png" class="casa-logo" alt="ElephantBet">
                 </div>
-                <div class="card-casa" onclick="App.verSinais('premierbet')">
+                <div class="card-casa" onclick="App.verSinais('888bet')">
                     <img src="assets/ima01.png" class="casa-logo" alt="888bet">
                 </div>
                 <div class="card-casa" onclick="App.verSinais('bantubet')">
