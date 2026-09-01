@@ -10,8 +10,8 @@ function renderPlataformas() {
                 <div class="casa-item" onclick="app.irParaSinais('elephantbet')">
                     <i class="fas fa-server"></i> ELEPHANTBET
                 </div>
-                <div class="casa-item" onclick="app.irParaSinais('oitocentosbet')">
-                    <i class="fas fa-server"></i> OITOCENTOSBET
+                <div class="casa-item" onclick="app.irParaSinais('premierbet')">
+                    <i class="fas fa-server"></i> 888bet
                 </div>
                 <div class="casa-item" onclick="app.irParaSinais('bantubet')">
                     <i class="fas fa-server"></i> bantubet
