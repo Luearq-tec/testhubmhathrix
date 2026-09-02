@@ -22,8 +22,8 @@ function renderPlataformas() {
                 <div class="casa-item" onclick="App.verSinais('kwanza')">
                     <i class="fas fa-server"></i> KWANZABET
                 </div>
-                <div class="casa-item" onclick="App.verSinais('win')">
-                    <i class="fas fa-server"></i> WIN
+                <div class="casa-item" onclick="App.verSinais('1win')">
+                    <i class="fas fa-server"></i> 1WIN
                 </div>
             </div>
         </div>
