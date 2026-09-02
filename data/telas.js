@@ -6,7 +6,6 @@
 const Telas = {
     // 1. TELA DE ACESSO (LOGIN)
     login: () => `     
- 
         <div class="login-container">
             <h1 class="brand">MATRIX <span>V77</span></h1>
             <p class="subtitle">Acesse o sistema de análise</p>
@@ -42,16 +41,19 @@ const Telas = {
                     <img src="assets/ima02.png" class="casa-logo" alt="ElephantBet">
                 </div>
                 <div class="card-casa" onclick="App.verSinais('premierbet')">
-                    <img src="assets/ima01.png" class="casa-logo" alt="bet">
+                    <img src="assets/ima01.png" class="casa-logo" alt="PremierBet">
+                </div>
+                <div class="card-casa" onclick="App.verSinais('888bets')">
+                    <img src="assets/ima07.png" class="casa-logo" alt="888bets">
                 </div>
                 <div class="card-casa" onclick="App.verSinais('bantubet')">
-                    <img src="assets/ima04.png" class="casa-logo" alt="bantubet">
+                    <img src="assets/ima04.png" class="casa-logo" alt="BantuBet">
                 </div>
                 <div class="card-casa" onclick="App.verSinais('kwanza')">
-                    <img src="assets/ima06.png" class="casa-logo" alt="kwanzaBET">
+                    <img src="assets/ima06.png" class="casa-logo" alt="KwanzaBet">
                 </div>
                 <div class="card-casa" onclick="App.verSinais('win')">
-                    <img src="assets/ima05.png" class="casa-logo" alt="win">
+                    <img src="assets/ima05.png" class="casa-logo" alt="Win">
                 </div>
             </div>
         </div>
